@@ -75,8 +75,8 @@ Os arquivos temporários são usados para manter a memória sob controle durante
   - `Ordenacao/ordenacao.c`, `Ordenacao/ordenacaoArquivo.c`, `Ordenacao/ordenacao.h`
 
 
-## Autores / Créditos
+## Autores
 
-- Carlos Eduardo
-- Guilherme Aredes
-- Marcos Felipe
+- [Carlos Eduardo Pereira dos Santos](https://github.com/pereira-devcarlos)
+- [Marcos Felipe dos Reis Bento](https://github.com/MarcosBento06)
+- [Guilherme de Oliveira Aredes](https://github.com/aredesog)
