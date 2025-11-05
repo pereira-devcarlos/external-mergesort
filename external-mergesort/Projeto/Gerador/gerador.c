@@ -14,8 +14,8 @@ int main() {
         return 1;
     }
 
-    // Abre o arquivo de saída em modo texto
-    FILE *arq = fopen("dados/dados.txt", "w");
+    // Abre o arquivo de saída em modo texto (colocado na pasta ../Dados)
+    FILE *arq = fopen("../Dados/dados.txt", "w");
     if (arq == NULL) {
         printf("Erro ao criar o arquivo!\n");
         free(bloco);
@@ -58,7 +58,7 @@ int main() {
     fclose(arq);
     free(bloco);
 
-    printf("Arquivo de números gerado com sucesso: dados/dados.txt\n");
+    printf("Arquivo de números gerado com sucesso: ../Dados/dados.txt\n");
     printf("Total de números: %lld\n", totalNumeros);
 
     return 0;
