@@ -1,0 +1,4 @@
+# Ignore Windows/MSYS build artifacts and editor config
+**.exe
+**.o
+**/.vscode/
