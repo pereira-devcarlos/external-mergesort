@@ -1,24 +1,20 @@
 # External Merge Sort — Projeto
 
-Este repositório contém uma implementação didática de Ordenação Externa (external merge sort) em C, composta por dois programas principais:
+## Descrição
 
-- `gerador` — gera um arquivo de dados com números inteiros (texto) para serem ordenados.
-- `ordenacao` — implementa a ordenação externa em arquivo texto: divide em blocos, ordena cada bloco em memória e intercalas os blocos para produzir o arquivo final ordenado.
+Implementação didática de Ordenação Externa (external merge sort) em C. O projeto traz dois programas principais:
 
-Estrutura do repositório
+- `gerador` — gera um arquivo de números inteiros (texto) que servirá de entrada.
+- `ordenacao` — realiza a ordenação externa: divide o arquivo em blocos que cabem na memória, ordena cada bloco e intercala os blocos para produzir o arquivo final ordenado.
 
-- `Dados/` — local destinado aos arquivos de entrada/saída (`dados.txt`, `dados_ordenados.txt`) e blocos temporários gerados pelo processo.
-- `Projeto/` — código-fonte e makefile.
-  - `Gerador/gerador.c` — gerador de dados.
-  - `Ordenacao/ordenacao.c`, `Ordenacao/ordenacaoArquivo.c`, `Ordenacao/ordenacao.h` — implementação da ordenação em memória (quicksort) e lógica de I/O e merge em arquivos.
-
-Requisitos
+## Requisitos
 
 - gcc (compilador C) e make
-- No Windows é recomendado usar MSYS2/MinGW, Git Bash ou WSL para ter `make` e utilitários POSIX; o `Makefile` foi testado com gcc/make.
-- Espaço em disco suficiente: o gerador pode criar arquivos muito grandes por padrão — ver seção "Avisos" abaixo.
+- No Windows, recomenda-se MSYS2/MinGW, Git Bash ou WSL para obter `make` e utilitários POSIX.
+- Espaço em disco suficiente: o gerador pode criar arquivos muito grandes por padrão — ver seção "Avisos importantes".
 
-Compilação
+
+## Compilação
 
 Abra um terminal na pasta `Projeto` e execute:
 
@@ -27,71 +23,60 @@ cd "C:\Users\<você>\...\external-mergesort\external-mergesort\Projeto"
 make
 ```
 
-Isso deverá gerar os executáveis `gerador` e `ordenacao` (em Windows podem aparecer como `gerador.exe` e `ordenacao.exe`).
+Isso gera os executáveis `gerador` e `ordenacao` (no Windows podem aparecer como `gerador.exe` e `ordenacao.exe`).
 
-Limpeza
-
-Para remover arquivos objeto e executáveis:
+Para limpar artefatos de compilação:
 
 ```powershell
 make clean
 ```
 
-Uso / Execução
+## Uso rápido
 
-1. Gerar os dados (arquivo `../Dados/dados.txt`):
+1) Gerar dados de teste (arquivo `../Dados/dados.txt`):
 
 ```powershell
 .\gerador.exe
 # ou ./gerador (em ambientes Unix)
 ```
 
-Por padrão o gerador grava em `../Dados/dados.txt` (caminho relativo ao diretório `Projeto`).
-
-2. Ordenar o arquivo gerado (arquivo de saída `../Dados/dados_ordenados.txt`):
+2) Ordenar os dados gerados (arquivo de saída `../Dados/dados_ordenados.txt`):
 
 ```powershell
 .\ordenacao.exe
 # ou ./ordenacao
 ```
 
-O programa `ordenacao` realiza:
-- leitura de `../Dados/dados.txt`;
-- divisão em blocos (tamanho configurado no código); cada bloco é ordenado em memória e salvo como `../Dados/bloco_*.txt`;
-- intercalação (merge) dos blocos ordenados gerando `../Dados/dados_ordenados.txt`;
-- remoção dos arquivos temporários `../Dados/bloco_*.txt`.
+## Detalhes da execução
 
-Parâmetros e alteração do comportamento
+- `gerador` grava os números em `../Dados/dados.txt`.
+- `ordenacao`:
+  - lê `../Dados/dados.txt`;
+  - divide em blocos de tamanho configurado no código;
+  - ordena cada bloco em memória e grava como `../Dados/bloco_*.txt`;
+  - intercala todos os blocos gerando `../Dados/dados_ordenados.txt`;
+  - remove os arquivos temporários `../Dados/bloco_*.txt`.
 
-- O tamanho dos blocos, número de linhas e paths estão definidos como constantes no código-fonte; para usar valores diferentes edite os arquivos fonte (`gerador.c` e `ordenacaoArquivo.c`) e recompile.
-- Recomenda-se tornar os paths e tamanhos parâmetros via linha de comando se desejar flexibilidade — posso ajudar a parametrizar se quiser.
+Os arquivos temporários são usados para manter a memória sob controle durante a ordenação de grandes volumes.
 
-Avisos importantes
 
-- Espaço em disco: o valor padrão no `gerador.c` gera uma quantidade massiva de números (a configuração inicial pode criar arquivos gigantescos — ver constantes no arquivo). Ajuste `totalNumeros` e `tamBloco` antes de gerar se não tiver espaço suficiente.
-- Tempo de execução: gerar e ordenar grandes arquivos pode levar muito tempo.
-- Permissões: certifique-se que `../Dados` existe e está gravável pelo usuário que executa os programas.
+## Avisos importantes
 
-Sobre a técnica (por que usar Ordenação Externa)
+- Espaço em disco: o valor padrão em `gerador.c` pode gerar arquivos muito grandes. Antes de rodar, ajuste `totalNumeros` e `tamBloco` se necessário.
+- Tempo: gerar/ordenar grandes volumes pode levar muito tempo.
+- Permissões: verifique se `../Dados` existe e está gravável.
 
-A Ordenação Externa é usada quando o tamanho dos dados excede a memória RAM disponível. O procedimento básico:
 
-1. Divide o arquivo grande em blocos que cabem na memória.
-2. Ordena cada bloco na memória e grava cada bloco ordenado em disco (arquivos temporários).
-3. Intercala (merge) todos os blocos ordenados para produzir o arquivo final ordenado.
+## Estrutura do repositório
 
-Essa estratégia reduz o uso de memória e usa operações sequenciais de disco (mais eficientes) em vez de carregar todo o arquivo em RAM.
+- `Dados/` — arquivos de entrada/saída e temporários (`dados.txt`, `dados_ordenados.txt`, `bloco_*.txt`).
+- `Projeto/` — código-fonte e `Makefile`:
+  - `Gerador/gerador.c`
+  - `Ordenacao/ordenacao.c`, `Ordenacao/ordenacaoArquivo.c`, `Ordenacao/ordenacao.h`
 
-Arquivos gerados / temporários
 
-- `../Dados/dados.txt` — arquivo de entrada (gerado pelo `gerador`).
-- `../Dados/bloco_1.txt`, `../Dados/bloco_2.txt`, ... — blocos temporários ordenados.
-- `../Dados/dados_ordenados.txt` — arquivo final ordenado.
+## Autores / Créditos
 
-Controle de versão
-
-Este repositório contém um `.gitignore` que já ignora arquivos de build e configurações de editor (por exemplo, `*.exe`, `*.o`, `.vscode/`).
-
-Autores / Créditos
-
-- Carlos Eduardo, Guilherme Aredes, Marcos Felipe
+- Carlos Eduardo
+- Guilherme Aredes
+- Marcos Felipe
