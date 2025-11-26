@@ -1,5 +1,4 @@
-# External Merge Sort — Projeto
-
+# External Merge Sort
 ## Descrição
 
 Implementação didática de Ordenação Externa (external merge sort) em C. O projeto traz dois programas principais:
